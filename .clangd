@@ -1,0 +1,150 @@
+# Apply this config conditionally to all CUDA files
+If:
+  PathMatch: .*\.cuh
+CompileFlags:
+  Add:
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/_deps/raft-src/cpp/include
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/_deps/rmm-src/include/rmm
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/_deps/cccl-src/thrust/thrust
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/_deps/cccl-src/thrust
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/_deps/rmm-src/include
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/_deps/cccl-src/cub/cub
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/_deps/cccl-src/cub
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/_deps/cccl-src/libcudacxx/include
+    - -Ibuild/_deps
+    # OpenImageIO includes
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/vcpkg_installed/x64-linux/include
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/vcpkg_installed/x64-linux/include/
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/vcpkg_installed/x64-linux/include/OpenImageIO
+    - --cuda-gpu-arch=sm_75
+  Remove:
+    - -forward-unknown-to-host-compiler
+    - --generate-code*
+    - -rdc=*
+    - -Xcompiler*
+    - -arch
+    - -arch=native
+    - --expt-extended-lambda
+    - --options-file
+    # strip CUDA fatbin args
+    - "-Xfatbin*"
+    # strip CUDA arch flags
+    - "-gencode*"
+    - "--generate-code*"
+    # strip CUDA flags unknown to clang
+    - "-ccbin*"
+    - "--compiler-options*"
+    - "--expt-extended-lambda"
+    - "--expt-relaxed-constexpr"
+    - "-forward-unknown-to-host-compiler"
+    - "-Werror=cross-execution-space-call"
+    - --expt-relaxed-constexpr
+    - --generate-line-info
+    - -lineinfo
+---
+If:
+  PathMatch: .*\.cu
+CompileFlags:
+  Compiler: /usr/local/cuda-12.9/bin/nvcc
+  Add:
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/_deps/raft-src/cpp/include
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/_deps/rmm-src/include/rmm
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/_deps/rmm-src/include
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/_deps/cccl-src/thrust/thrust
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/_deps/cccl-src/thrust
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/_deps/cccl-src/cub/cub
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/_deps/cccl-src/cub
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/_deps/cccl-src/libcudacxx/include
+    - -Ibuild/_deps
+    # OpenImageIO includes
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/vcpkg_installed/x64-linux/include
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/vcpkg_installed/x64-linux/include/
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/vcpkg_installed/x64-linux/include/OpenImageIO
+    - --cuda-gpu-arch=sm_75
+  Remove:
+    - -forward-unknown-to-host-compiler
+    - --generate-code*
+    - -rdc=*
+    - -Xcompiler*
+    - -arch
+    - -arch=native
+    - --expt-extended-lambda
+    - --options-file
+    # strip CUDA fatbin args
+    - "-Xfatbin*"
+    # strip CUDA arch flags
+    - "-gencode*"
+    - "--generate-code*"
+    # strip CUDA flags unknown to clang
+    - "-ccbin*"
+    - "--compiler-options*"
+    - "--expt-extended-lambda"
+    - "--expt-relaxed-constexpr"
+    - "-forward-unknown-to-host-compiler"
+    - "-Werror=cross-execution-space-call"
+    - --expt-relaxed-constexpr
+    - --generate-line-info
+    - -lineinfo
+---
+
+CompileFlags:
+  # Add: [-Ibuild/_deps, -I/usr/local/cuda/include, -Ibuild/_deps/raft-src/cpp/include, -Ibuild/_deps/rmm-src/include, -Ibuild/_deps/googlebenchmark-src/include]
+  CompilationDatabase: build
+  Add:
+    - -xcuda
+    - --cuda-path=/usr/local/cuda-12.9
+    - --cuda-gpu-arch=sm_75
+    - -I/usr/local/cuda-12.9/include
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/_deps/raft-src/cpp/bench/ann/src/raft
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/_deps/raft-src/cpp/include/raft
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/_deps/rmm-src/python/rmm
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/_deps/rmm-src/python/rmm/rmm
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/_deps/include/rmm
+    - -Ibuild/_deps/rmm-src/includebranch-24.08
+    - -Ibuild/_deps/cccl-src/thrust
+    - -Ibuild/_deps/cccl-src/cub
+    - -Ibuild/_deps/cccl-src/libcudacxx/include
+    - -Ibuild/_deps
+    - -I${workspaceFolder}/src
+    # OpenImageIO includes
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/vcpkg_installed/x64-linux/include
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/vcpkg_installed/x64-linux/include/
+    - -I/home/jv/Projets/PreSpimed/GPU_tests/Basics/build/vcpkg_installed/x64-linux/include/OpenImageIO
+    - -ferror-limit=0
+    - -L/usr/local/cuda-12.9/lib64
+    - -L/usr/local/cuda-12.9/lib64/
+    - -I/usr/local/cuda-12.9/include
+    - -I/usr/local/cuda-12.9/include/
+  Remove:
+    - -forward-unknown-to-host-compiler
+    - --generate-code*
+    - -rdc=*
+    - -Xcompiler*
+    - -arch
+    - -arch=native
+    - --expt-extended-lambda
+    - --options-file
+    # strip CUDA fatbin args
+    - "-Xfatbin*"
+    # strip CUDA arch flags
+    - "-gencode*"
+    - "--generate-code*"
+    # strip CUDA flags unknown to clang
+    - "-ccbin*"
+    - "--compiler-options*"
+    - "--expt-extended-lambda"
+    - "--expt-relaxed-constexpr"
+    - "-forward-unknown-to-host-compiler"
+    - "-Werror=cross-execution-space-call"
+    - --expt-relaxed-constexpr
+    - --generate-line-info
+    - -lineinfo
+
+Hover:
+  ShowAKA: No
+InlayHints:
+  Enabled: No
+Diagnostics:
+  Suppress:
+    - "variadic_device_fn"
+    - "attributes_not_allowed"
